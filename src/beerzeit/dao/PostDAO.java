@@ -72,7 +72,9 @@ public class PostDAO extends DAO{
                         usuarioDAO.getUserById(rs.getInt("usuario")),
                         rs.getString("message"),
                         this.getLikes(postId),
-                        new Date(new Timestamp(new Long(rs.getString("createdat"))).getTime())
+                        new Date(new Timestamp(new Long(rs.getString("createdat"))).getTime()),
+                        rs.getString("latitude"),
+                        rs.getString("longitude")
                     )
             );
 
@@ -80,14 +82,16 @@ public class PostDAO extends DAO{
         this.close();
         return posts;
     }
-    public void insertPost(int authorid, String message) throws SQLException, ClassNotFoundException {
+    public void insertPost(int authorid, String message, String lat, String lon) throws SQLException, ClassNotFoundException {
         this.open();
         PreparedStatement stmt = this.conn.prepareStatement(
-                "INSERT INTO public.posts(usuario, message, createdat) VALUES (?, ?, ?);"
+                "INSERT INTO public.posts(usuario, message, createdat, latitude, longitude) VALUES (?, ?, ?, ?, ?);"
         );
         stmt.setInt(1, authorid);
         stmt.setString(2, message);
         stmt.setString(3, "" + System.currentTimeMillis());
+        stmt.setString(4, lat);
+        stmt.setString(5, lon);
         stmt.execute();
 
         this.close();

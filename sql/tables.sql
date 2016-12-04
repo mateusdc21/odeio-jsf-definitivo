@@ -12,6 +12,8 @@ CREATE TABLE posts (
 	id SERIAL PRIMARY KEY NOT NULL,
 	usuario INTEGER REFERENCES usuario (id),
 	message TEXT NOT NULL,
+	latitude TEXT,
+	longitude TEXT,
 	createdat VARCHAR(255) NOT NULL -- unix timestamp
 );
 

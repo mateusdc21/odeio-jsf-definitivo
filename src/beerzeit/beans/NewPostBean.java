@@ -15,9 +15,11 @@ import java.sql.SQLException;
 public class NewPostBean {
     private String message;
     private PostsControl postsControl = new PostsControl();
+    private String lat;
+    private String lon;
 
     public String sendPost() throws SQLException, ClassNotFoundException {
-        postsControl.sendPost(new Integer(SessionUtils.getUserId()), getMessage());
+        postsControl.sendPost(new Integer(SessionUtils.getUserId()), getMessage(), lat, lon);
         this.message = null;
         return "index";
     }
@@ -28,5 +30,21 @@ public class NewPostBean {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
     }
 }

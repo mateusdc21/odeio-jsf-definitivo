@@ -14,20 +14,26 @@ public class Post {
     private List<Usuario> likes;
     private Date createdat;
     private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    private String latitude;
+    private String longitude;
 
-    public Post(Usuario usuario, String message, List<Usuario> likes, Date createdat) {
+    public Post(Usuario usuario, String message, List<Usuario> likes, Date createdat, String latitude, String longitude) {
         this.usuario = usuario;
         this.message = message;
         this.likes = likes;
         this.createdat = createdat;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public Post(int id, Usuario usuario, String message, List<Usuario> likes, Date createdat) {
+    public Post(int id, Usuario usuario, String message, List<Usuario> likes, Date createdat, String latitude, String longitude) {
         this.id = id;
         this.usuario = usuario;
         this.message = message;
         this.likes = likes;
         this.createdat = createdat;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public int getId() {
@@ -72,5 +78,21 @@ public class Post {
 
     public String getHourcreatedat() {
         return timeFormat.format(createdat);
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }

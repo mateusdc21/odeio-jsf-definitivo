@@ -18,7 +18,7 @@ public class PostsControl {
         postDAO.insertLike(userid, postid);
     }
 
-    public void sendPost(int userid, String message) throws SQLException, ClassNotFoundException {
-        postDAO.insertPost(userid, message);
+    public void sendPost(int userid, String message, String lat, String lon) throws SQLException, ClassNotFoundException {
+        postDAO.insertPost(userid, message, lat, lon);
     }
 }
