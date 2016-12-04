@@ -51,6 +51,11 @@ public class PostBean {
             }
         }
     }
+
+    public List<Post> listByUser(int userid) throws SQLException, ClassNotFoundException {
+        return postsControl.listByUser(userid);
+    }
+
     public Map<Integer, StreamedContent> getPictures() {
         return pictures;
     }

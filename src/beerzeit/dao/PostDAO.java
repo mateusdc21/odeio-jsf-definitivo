@@ -96,4 +96,31 @@ public class PostDAO extends DAO{
 
         this.close();
     }
+
+    public List<Post> listByUser(int userid) throws SQLException, ClassNotFoundException {
+        this.open();
+        List<Post> posts = new ArrayList<>();
+        PreparedStatement stmt = this.conn.prepareStatement(
+                "SELECT * FROM posts WHERE usuario = ?;"
+        );
+        stmt.setInt(1, userid);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            int postId = rs.getInt("id");
+            posts.add(
+                    new Post(
+                            postId,
+                            usuarioDAO.getUserById(rs.getInt("usuario")),
+                            rs.getString("message"),
+                            this.getLikes(postId),
+                            new Date(new Timestamp(new Long(rs.getString("createdat"))).getTime()),
+                            rs.getString("latitude"),
+                            rs.getString("longitude")
+                    )
+            );
+
+        }
+        this.close();
+        return posts;
+    }
 }

@@ -60,6 +60,7 @@ public class UserBean {
         return "login";
     }
 
+
     public String signup() {
         try {
             if (avatar != null) {

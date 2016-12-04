@@ -1,85 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-  <title>Beerzeit</title>
-  <link rel="stylesheet" href="resources/css/my.css">
-  <link rel="stylesheet" href="resources/css/bootstrap.min.css">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    * {
-      text-shadow: transparent 0px 0px 0px, rgba(0, 0, 0, 0.68) 0px 0px 0px !important;
-    }
-  </style>
+  <ui:composition template="templates/commonHead.xhtml" />
 </head>
 
 <body>
   <!-- Fixed navbar -->
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        <a class="navbar-brand" href="index.html">Beerzeit <small>@borgebeermaker</small></a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="index.html">Timeline</a></li>
-          <li><a href="recipeslist.html">Receitas</a></li>
-          <li><a href="mapa.html">Mapa</a></li>
-          <li class="active"><a href="me.html">Perfil</a></li>
-          <li><a href="config.html">Configurações</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="login.xhtml">Sair</a></li>
-        </ul>
-      </div>
-      <!--/.nav-collapse -->
-    </div>
-  </nav>
+  <ui:composition template="templates/commonNavbar.xhtml" />
 
   <div class="container" role="main">
     <div class="row">
       <div class="col-sm-2 col-md-2">
-        <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png" alt="" class="img-rounded img-responsive" />
+        <p:graphicImage styleClass="img-rounded img-responsive" value="#{imagerender.image}" width="512" height="512">
+          <f:param name="filename" value="#{user.usuario.avatar}"></f:param>
+        </p:graphicImage>
       </div>
       <div class="col-sm-4 col-md-4">
         <blockquote>
-          <p>@borgebeermaker</p> <small><cite title="Source Title">São Paulo, Brasil  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
+          <p>@<h:outputText value="#{user.usuario.username}" /></p>
         </blockquote>
-        <p> <i class="glyphicon glyphicon-envelope"></i> borge@beermaker.com
-          <br /> <i class="glyphicon glyphicon-gift"></i> 30 de Janeiro, 1974</p>
+        <p>
+          <i class="glyphicon glyphicon-envelope"></i> <h:outputText value="#{user.usuario.email}" />
+        </p>
       </div>
     </div>
     <div class="row">
       <h2>Mensagens:</h2>
     </div>
     <div class="row messages">
-      <div class="media msg">
-        <a class="pull-left" href="#">
-          <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 32px; height: 32px;" src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png">
-        </a>
-        <div class="media-body">
-          <h5 class="media-heading">
-          @borgebeermaker
-          <small class="time"><i class="fa fa-clock-o"></i> 12:10am</small>
-        </h5>
-          <small class="col-lg-10">Open brass na minha rua hoje! Entrada R$10, cerveja liberada!</small>
-          <div class="col-lg-12">
-            10 <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+      <ui:repeat value="#{posts.listByUser(user.usuario.id)}" var="post">
+        <section>
+          <div class="media msg">
+            <a class="pull-left" href="#">
+              <p:graphicImage value="#{imagerender.image}" width="64" height="64">
+                <f:param name="filename" value="#{post.usuario.avatar}"></f:param>
+              </p:graphicImage>
+            </a>
+            <div class="media-body">
+              <h5 class="media-heading">
+                @<h:outputText value="#{post.usuario.username}" />
+                <small class="time"><i class="fa fa-clock-o"></i><time><h:outputText value="#{post.getHourcreatedat()}"/></time></small>
+              </h5>
+              <small class="col-lg-10"><h:outputText value="#{post.message}" /></small>
+              <h:form>
+                <h:commandLink action="#{posts.sendLike(user.usuario.id, post.id)}">
+                  <div class="#{posts.containsLikeUser(post, user.usuario.id)}">
+                    #{post.likes.size()} <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                  </div>
+                </h:commandLink>
+              </h:form>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </ui:repeat>
     </div>
   </div>
 
@@ -88,11 +68,8 @@
   <!-- Bootstrap core JavaScript
     ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <script src=resources/js/jquery.min.js></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script>
-    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
-  </script>
+  <script src="resources/js/jquery.min.js" />
+  <script src="resources/js/bootstrap.min.js" />
 </body>
 
 </html>

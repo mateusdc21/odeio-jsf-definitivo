@@ -21,4 +21,8 @@ public class PostsControl {
     public void sendPost(int userid, String message, String lat, String lon) throws SQLException, ClassNotFoundException {
         postDAO.insertPost(userid, message, lat, lon);
     }
+
+    public List<Post> listByUser(int userid) throws SQLException, ClassNotFoundException {
+        return postDAO.listByUser(userid);
+    }
 }
