@@ -29,5 +29,9 @@
             <from-outcome>me</from-outcome>
             <to-view-id>/me.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>mapa</from-outcome>
+            <to-view-id>/mapa.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
 </faces-config>
