@@ -1,9 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 >
 
 <h:head>
@@ -18,11 +20,7 @@
   <link rel="stylesheet" href="resources/css/bootstrap.min.css" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="resources/css/login.css" />
-  <style type="text/css">
-    * {
-      text-shadow: transparent 0px 0px 0px, rgba(0, 0, 0, 0.68) 0px 0px 0px !important;
-    }
-  </style>
+
 </h:head>
 
 <body class="login">
@@ -38,18 +36,24 @@
         </div>
 
         <div style="padding-top:30px" class="panel-body">
-          <h:messages></h:messages>
+          
           <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
           <h:form id="loginform" class="form-horizontal">
+          	<h:messages for="login-username"></h:messages>
             <div style="margin-bottom: 25px" class="input-group">
+              
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <h:inputText id="login-username" type="text" class="form-control" name="username" value="#{user.email}" placeholder="Email" />
+              <h:inputText id="login-username" type="text" class="form-control" name="username" value="#{user.email}" a:placeholder="Email" required="true" label="e-mail"/>
+              
             </div>
 
+			<h:messages for="login-password"></h:messages>
             <div style="margin-bottom: 25px" class="input-group">
+              
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <h:inputSecret id="login-password" type="password" class="form-control" name="password" value="#{user.password}" placeholder="Senha" />
+              <h:inputSecret id="login-password" type="password" class="form-control" name="password" value="#{user.password}" a:placeholder="Senha" required="true" label="senha"/>
+              
             </div>
 
             <div class="input-group">
@@ -106,37 +110,37 @@
             <div class="form-group">
               <label class="col-md-3 control-label">Email<i class="required-mark">*</i></label>
               <div class="col-md-9">
-                <!-- <input type="text" class="form-control" name="email" placeholder="Endereço de Email" /> -->
-                <h:inputText id="signup-email" type="text" class="form-control" name="email" value="#{user.email}" placeholder="Endereço de email" />
+                <!-- <input type="text" class="form-control" name="email" a:placeholder="Endereço de Email" /> -->
+                <h:inputText id="signup-email" type="text" class="form-control" name="email" value="#{user.email}" a:placeholder="Endereço de email" />
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-md-3 control-label">Nome completo<i class="required-mark">*</i></label>
               <div class="col-md-9">
-                <!-- <input type="text" class="form-control" name="firstname" placeholder="Nome completo" /> -->
-                <h:inputText id="signup-fullname" type="text" class="form-control" name="fullname" value="#{user.fullname}" placeholder="Nome completo" />
+                <!-- <input type="text" class="form-control" name="firstname" a:placeholder="Nome completo" /> -->
+                <h:inputText id="signup-fullname" type="text" class="form-control" name="fullname" value="#{user.fullname}" a:placeholder="Nome completo" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-md-3 control-label">Nome de usuario<i class="required-mark">*</i></label>
               <div class="col-md-9">
-                <!-- <input type="text" class="form-control" name="username" placeholder="nomedeusuario" /> -->
-                <h:inputText id="signup-username" type="text" class="form-control" name="username" value="#{user.username}" placeholder="Nome de usuario" />
+                <!-- <input type="text" class="form-control" name="username" a:placeholder="nomedeusuario" /> -->
+                <h:inputText id="signup-username" type="text" class="form-control" name="username" value="#{user.username}" a:placeholder="Nome de usuario" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-md-3 control-label">Senha<i class="required-mark">*</i></label>
               <div class="col-md-9">
-                <!-- <input type="password" class="form-control" name="passwd" placeholder="Senha" /> -->
-                <h:inputText id="signup-password" type="text" class="form-control" name="password" value="#{user.password}" placeholder="Senha" />
+                <!-- <input type="password" class="form-control" name="passwd" a:placeholder="Senha" /> -->
+                <h:inputSecret id="signup-password" type="text" class="form-control" name="password" value="#{user.password}" a:placeholder="Senha" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-md-3 control-label">Confirme a sua senha<i class="required-mark">*</i></label>
               <div class="col-md-9">
-                <!-- <input type="password" class="form-control" name="passwd" placeholder="Confirme a sua senha" /> -->
-                <h:inputText id="signup-confirm-password" type="text" class="form-control" name="password-confirmation" value="#{user.confirmpassword}" placeholder="Confirme sua senha" />
+                <!-- <input type="password" class="form-control" name="passwd" a:placeholder="Confirme a sua senha" /> -->
+                <h:inputSecret id="signup-confirm-password" type="text" class="form-control" name="password-confirmation" value="#{user.confirmpassword}" a:placeholder="Confirme sua senha" />
               </div>
             </div>
 
@@ -144,7 +148,7 @@
               <label class="col-md-3 control-label">Data de Nascimento<i class="required-mark">*</i></label>
               <div class="col-md-9">
                 <!--<input type="date" class="form-control" name="date-of-birth" />-->
-                <h:inputText id="signup-date-of-birth" type="text" class="form-control" name="date-of-birth" value="#{user.dateofbirth}" placeholder="Data de nascimento" />
+                <h:inputText id="signup-date-of-birth" type="text" class="form-control" name="date-of-birth" value="#{user.dateofbirth}" a:placeholder="Data de nascimento" />
               </div>
             </div>
 

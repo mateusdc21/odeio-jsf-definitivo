@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<head>
+  <ui:composition template="templates/commonHead.xhtml" />
+</head>
+
+<body>
+  <!-- Fixed navbar -->
+  <ui:composition template="templates/commonNavbar.xhtml" />
+  
+  <div class="container role-main">
+    <div class="row">
+      <form class="form-horizontal">
+        <fieldset>
+		  <h:messages for="btn-update"></h:messages>
+          <!-- Form Name -->
+          <legend>Atualizar dados</legend>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="Nome">Nome</label>
+            <div class="col-md-5">
+              <!-- <input id="Nome" name="Nome" type="text" a:placeholder="borgebeermaker" class="form-control input-md"></input> -->
+              <h:inputText id="Nome" type="text" class="form-control input-md" name="Nome" value="#{user.fullname}" a:placeholder="Nome completo" />
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="Email">Email</label>
+            <div class="col-md-5">
+              <!-- <input id="Email" name="Email" type="text" a:placeholder="borge@beermaker.com" class="form-control input-md"></input> -->
+              <h:inputText id="Email" type="text" class="form-control input-md" name="Email" value="#{user.email}" a:placeholder="Endereço de email" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="username">Nome de usuario</label>
+            <div class="col-md-5">
+              <!-- <input id="username" name="username" type="text" a:placeholder="borgebeermaker" class="form-control input-md"></input> -->
+              <h:inputText id="username" type="text" class="form-control input-md" name="username" value="#{user.username}" a:placeholder="Nome de usuario" />
+            </div>
+          </div>
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="senha">Senha</label>
+            <div class="col-md-5">
+              <!-- <input id="senha" name="senha" type="password" value='**********' class="form-control input-md"></input> -->
+              <h:inputSecret id="senha" type="password" class="form-control input-md" name="senha" value="#{user.password}" a:placeholder="Senha" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton">Nova foto</label>
+            <div class="col-md-4">
+              <!--<input class="btn btn-primary" type="file" name="pic" accept="image/*"> -->
+              <!--<h:commandButton style="display:none;" class="btn btn-primary" type="button" id="loadFileXml" value="Escolher arquivo:" onclick="document.getElementById('file').click();" /></h:commandButton> -->
+              <!-- <input type="file" style="display:none;" id="file" name="file" /></input> -->
+              <p:fileUpload id="file" name="file" value="#{user.avatar}" mode="simple"></p:fileUpload>
+            </div>
+          </div>
+
+          <!-- Button -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton">Salvar</label>
+            <div class="col-md-4">
+              <!-- <button id="singlebutton" name="singlebutton" class="btn btn-primary">Salvar</button> -->
+              <h:commandButton id="btn-update" class="btn btn-success" action="#{user.update}" value="Salvar"></h:commandButton>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="resources/js/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script>
+	//<![CDATA[
+    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+    //]]>
+  </script>
+</body>
+
+</html>
