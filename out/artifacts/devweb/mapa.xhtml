@@ -18,10 +18,34 @@
 <body>
   <ui:composition template="templates/commonNavbar.xhtml" />
 
+
   <div class="container" role="main">
     <div id="map"></div>
   </div>
-
+  <div id="data" style="display: none">
+    <ui:repeat value="#{posts.listAll()}" var="post">
+      <div id="#{post.id}">
+        <div id="username">
+          @<h:outputText value="#{post.usuario.username}" />
+        </div>
+        <div id="createdat">
+          <h:outputText value="#{post.getHourcreatedat()}"/>
+        </div>
+        <div id="likes">
+          <h:outputText value="#{post.likes.size()}" />
+        </div>
+        <div id="latitude">
+          <h:outputText value="#{post.latitude}" />
+        </div>
+        <div id="longitude">
+          <h:outputText value="#{post.longitude}" />
+        </div>
+        <div id="message">
+          <h:outputText value="#{post.message}" />
+        </div>
+      </div>
+    </ui:repeat>
+  </div>
   <script src="resources/js/map.js" />
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1R21x8Csb0YHd_iCrvEJ1__Mg-prv4WM&amp;callback=initMap"/>
 

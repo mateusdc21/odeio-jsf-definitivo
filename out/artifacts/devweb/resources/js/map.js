@@ -18,33 +18,72 @@ function initMap() {
     }
   );
 
-  var gpsedPost = {
-    lat: -23.533773,
-    lng: -46.625290
-  };
-  let contentString = `<div class="media msg">
-      <a class="pull-left" href="#">
-        <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 32px; height: 32px;" src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/female1-512.png">
-      </a>
+
+
+  function myAddMarker(params) {
+    let contentString = `
+    <div class="media msg">
       <div class="media-body">
         <h5 class="media-heading">
-          @marieta
-          <small class="time"><i class="fa fa-clock-o"></i> 12:10am</small>
+          ${params.username}
+          <small class="time"><i class="fa fa-clock-o"></i> ${params.createdat} </small>
         </h5>
-        <small class="col-lg-10">Vou colar hoje lá na @brewdogsp para tomar um Punk IPA, alguém anima?</small>
+        <small class="col-lg-10">${params.message}</small>
         <div class="col-lg-12">
-          10 <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+          ${params.likes} <i class="fa fa-thumbs-up" aria-hidden="true"></i>
         </div>
       </div>
     </div>`;
-  let infoWindow = new google.maps.InfoWindow({
-    content: contentString,
-  })
 
-  var marker = new google.maps.Marker({
-    position: gpsedPost,
-    map: map,
-    title: '@marieta',
+    let infoWindow = new google.maps.InfoWindow({
+      content: contentString,
+    });
+
+    var gpsedPost = {
+      lat: parseFloat(params.latitude),
+      lng: parseFloat(params.longitude),
+    };
+    console.log(gpsedPost);
+
+    var marker = new google.maps.Marker({
+      position: gpsedPost,
+      map: map,
+      title: params.username,
+    });
+
+    marker.addListener('click', () => infoWindow.open(map, marker))
+
+    return marker;
+  }
+
+
+  const data = Array.from(document.getElementById('data').childNodes).map(x => x.childNodes[1]).filter(e => e);
+  const childData = data.map(e => Array.from(e.childNodes));
+  const dataInJson = childData.map(n =>
+        n.filter(
+                x =>
+                  x.id === 'username' ||
+                  x.id === 'latitude' ||
+                  x.id === 'longitude' ||
+                  x.id === 'createdat' ||
+                  x.id === 'likes' ||
+                  x.id === 'message'
+            )
+    ).map(x => {
+      return {
+        username: x[0].innerText.trim(),
+        createdat: x[1].innerText.trim(),
+        likes: x[2].innerText.trim(),
+        latitude: x[3].innerText.trim(),
+        longitude: x[4].innerText.trim(),
+        message: x[5].innerText.trim()
+      };
+    });
+
+  const dataWithGeoLocation = dataInJson.filter(x => (x.latitude.length > 0) && (x.longitude.length > 0));
+  const dataInMap = dataWithGeoLocation.map(x => {
+    const marker = myAddMarker(x);
+    return marker;
   });
-  marker.addListener('click', () => infoWindow.open(map, marker));
+
 };
